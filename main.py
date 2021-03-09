@@ -11,22 +11,36 @@ def GenerateDataSet(n, factors):
 
     # for loop which repeats N times meaning Lenth(DataDict) = N
     for i in range(n):
-        tmpIndiv = Names[random.randint(0, len(Names))]  # selects random name and assigns to var
-        tmpVuln = {''}  # declares a set which will contain Vulnerabilities
-        for x in range(random.randint(0, len(factors))):  # for loop for the amount of items in Vulnerability list
-            tmpVuln.add(factors[random.randint(0, (len(factors) - 1))])  # Adds random Vulnerability to set
-        tmpVuln.discard('')
-        tmpVuln.add(random.randint(0, 100))  # random age value assigned to begining of set
-        y = {tmpIndiv: tmpVuln}  # y = the name and info of individual
-        dictTMP.update(y)  # individual added
+        while True:
+            lenbefore = len(dictTMP)
+            tmpIndiv = Names[random.randint(0, (len(Names) - 1))]  # selects random name and assigns to var
+            tmpVuln = set()  # declares a set which will contain Vulnerabilities
+
+            for x in range(random.randint(0, len(factors))):  # for loop for the amount of items in Vulnerability list
+                tmpVuln.add(factors[random.randint(0, (len(factors) - 1))])  # Adds random Vulnerability to set
+            tmpVuln.add(random.randint(0, 100))  # random age value assigned to beginning of set
+            y = {tmpIndiv: tmpVuln}  # y = the name and info of individual\
+
+            dictTMP.update(y)  # individual added
+            if len(dictTMP) != lenbefore:
+                break
+
+
     return dictTMP  # full dictionary returned
 
+
+def WriteData2FIle(set):
+    print("enter name of file")
+    filename = input()
+    with open((filename + ".txt"), 'w') as f:
+        for key, value in Data.items():
+            f.write('%s:%s\n' % (key, value))
 
 
 if __name__ == '__main__':
     Data = None  # Ditctionary of individuals to be sorted
     IncVFactors = ['Smoking', 'Drinking',
-                   'HealthIssue']  # List of factors which increase to Vaunerability of an individual
+                   'HealthIssue', 'TraveledAbroad','EssentialWorker']  # List of factors which increase to Vaunerability of an individual
     ''' 
     IncVfactors is a lsit which contains the factors which increase the vulnerability of an individual    
     [ 'Smoking' , 'Drinking' , ' HealthIssue ' ]
@@ -35,5 +49,9 @@ if __name__ == '__main__':
     {  'Marceli' : { 18 , Smoking } , 'Name' : { Age , Issues... }}
         
     '''
-    Data = GenerateDataSet(10, IncVFactors)
+    Data = GenerateDataSet(10000, IncVFactors)
     print(Data)
+    print(len(Data))
+    print("would you like to write the generated data to a file? (y/n)")
+    if input() == 'y':
+        WriteData2FIle(Data)
