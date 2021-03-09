@@ -2,22 +2,25 @@ import random
 
 
 def GenerateDataSet(n, factors):
-    dictTMP = {}
-    Names = []
-    Namefile = open('Names.txt', 'r')
+    dictTMP = {}  # declaring a temporary dictionary
+    Names = []  # list of available names
+    Namefile = open('Names.txt', 'r')  # opening the Name file
+    # For loop generates a list of names with no new line char
     for l in Namefile:
         Names.append(l.strip('\n'))
 
+    # for loop which repeats N times meaning Lenth(DataDict) = N
     for i in range(n):
-        tmpIndiv = Names[random.randint(0, len(Names))]
-        tmpVuln = {''}
-        for x in range(random.randint(0, len(factors))):
-            tmpVuln.add(factors[random.randint(0, (len(factors) - 1))])
+        tmpIndiv = Names[random.randint(0, len(Names))]  # selects random name and assigns to var
+        tmpVuln = {''}  # declares a set which will contain Vulnerabilities
+        for x in range(random.randint(0, len(factors))):  # for loop for the amount of items in Vulnerability list
+            tmpVuln.add(factors[random.randint(0, (len(factors) - 1))])  # Adds random Vulnerability to set
         tmpVuln.discard('')
-        tmpVuln.add(random.randint(0, 100))
-        y = {tmpIndiv: tmpVuln}
-        dictTMP.update(y)
-    return dictTMP
+        tmpVuln.add(random.randint(0, 100))  # random age value assigned to begining of set
+        y = {tmpIndiv: tmpVuln}  # y = the name and info of individual
+        dictTMP.update(y)  # individual added
+    return dictTMP  # full dictionary returned
+
 
 
 if __name__ == '__main__':
