@@ -17,4 +17,5 @@ PROGRESS:
       - returns time taken for conversion 
       - allows user to specify which file to convert 
       - converts file back to dict 
-      
+- Conversion from dict to list of lists 
+- sorting of list of lists
